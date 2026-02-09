@@ -1,9 +1,9 @@
 import { products, type Product } from "@/data/products";
 
 interface Props {
-  selectedId: string;
+  selectedId: string | undefined;
   onSelect: (p: Product) => void;
-  onOrder: () => void;
+  onOrder: (p: Product) => void;
 }
 
 const ProductGrid = ({ selectedId, onSelect, onOrder }: Props) => (
@@ -42,7 +42,7 @@ const ProductGrid = ({ selectedId, onSelect, onOrder }: Props) => (
                   </div>
                 </div>
                 <button
-                  onClick={(e) => { e.stopPropagation(); onOrder(); }}
+                  onClick={(e) => { e.stopPropagation(); onOrder(p); }}
                   className="w-full bg-primary text-primary-foreground text-xs font-medium py-2 rounded-lg hover:opacity-90 transition-opacity"
                 >
                   Order Now

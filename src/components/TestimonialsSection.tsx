@@ -34,9 +34,11 @@ const TestimonialsSection = () => {
   // Scroll to active testimonial on mobile
   useEffect(() => {
     if (scrollContainerRef.current) {
-      const scrollElement = scrollContainerRef.current.querySelector(`[data-index="${activeIndex}"]`);
+      const scrollElement = scrollContainerRef.current.querySelector(`[data-index="${activeIndex}"]`) as HTMLElement;
       if (scrollElement) {
-        scrollElement.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "start" });
+        const container = scrollContainerRef.current;
+        const targetScroll = scrollElement.offsetLeft - container.offsetLeft;
+        container.scrollTo({ left: targetScroll, behavior: "smooth" });
       }
     }
   }, [activeIndex]);

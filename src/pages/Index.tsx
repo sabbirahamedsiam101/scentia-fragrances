@@ -15,6 +15,7 @@ const Index = () => {
   const [bundleQty, setBundleQty] = useState(1);
   const checkoutRef = useRef<HTMLDivElement>(null);
   const productsRef = useRef<HTMLDivElement>(null);
+  const detailsRef = useRef<HTMLDivElement>(null);
 
   const scrollToCheckout = () => {
     checkoutRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -24,6 +25,11 @@ const Index = () => {
     productsRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
+  const handleProductSelect = (product: typeof products[0]) => {
+    setSelectedProduct(product);
+    detailsRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
     <div className="min-h-screen pb-16 md:pb-0">
       <HeroSection onCTAClick={scrollToProducts} />
@@ -31,11 +37,13 @@ const Index = () => {
       <div ref={productsRef}>
         <ProductGrid
           selectedId={selectedProduct.id}
-          onSelect={setSelectedProduct}
+          onSelect={handleProductSelect}
           onOrder={scrollToCheckout}
         />
       </div>
-      <ProductDetails product={selectedProduct} onOrder={scrollToCheckout} />
+      <div ref={detailsRef}>
+        <ProductDetails product={selectedProduct} onOrder={scrollToCheckout} />
+      </div>
       <TestimonialsSection />
       <BundleSection
         product={selectedProduct}
